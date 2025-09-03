@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-indigo-600 text-white flex flex-col p-4">
+            <h2 class="text-2xl font-bold mb-6">NaijaLogistics</h2>
+            <nav class="space-y-3">
+                <a href="#" class="block py-2 px-3 rounded hover:bg-indigo-500">Dashboard</a>
+                <a href="#" class="block py-2 px-3 rounded hover:bg-indigo-500">Shipments</a>
+                <a href="#" class="block py-2 px-3 rounded hover:bg-indigo-500">Settings</a>
+                <a href="{% url 'logout' %}" class="block py-2 px-3 rounded hover:bg-red-500">Logout</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 overflow-y-auto">
+            <header class="flex justify-between items-center mb-6">
+                <h1 class="text-xl font-semibold">{% block header %}{% endblock %}</h1>
+                <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded">
+                    {{ request.user.username }} ({{ request.user.role }})
+                </span>
+            </header>
+
+            <section>
+                {% block content %}{% endblock %}
+            </section>
+        </main>
+    </div>
+</body>
+</html>
