@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+    <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">Book a Shipment</h2>
+
+    <form id="shipmentForm" method="POST">
+        {% csrf_token %}
+
+        <!-- Step 1: Pickup Details -->
+        <div class="step" id="step1">
+            <h3 class="text-lg font-semibold mb-4">Pickup Details</h3>
+            <input type="text" name="pickup_address" placeholder="Pickup Address" class="w-full mb-3 p-2 border rounded">
+            <input type="text" name="pickup_city" placeholder="Pickup City" class="w-full mb-3 p-2 border rounded">
+            <input type="text" name="pickup_state" placeholder="Pickup State" class="w-full mb-3 p-2 border rounded">
+            <button type="button" onclick="nextStep(2)" class="bg-purple-600 text-white px-4 py-2 rounded">Next</button>
+        </div>
+
+        <!-- Step 2: Dropoff Details -->
+        <div class="step hidden" id="step2">
+            <h3 class="text-lg font-semibold mb-4">Dropoff Details</h3>
+            <input type="text" name="dropoff_address" placeholder="Dropoff Address" class="w-full mb-3 p-2 border rounded">
+            <input type="text" name="dropoff_city" placeholder="Dropoff City" class="w-full mb-3 p-2 border rounded">
+            <input type="text" name="dropoff_state" placeholder="Dropoff State" class="w-full mb-3 p-2 border rounded">
+            <button type="button" onclick="prevStep(1)" class="bg-gray-500 text-white px-4 py-2 rounded">Back</button>
+            <button type="button" onclick="nextStep(3)" class="bg-purple-600 text-white px-4 py-2 rounded">Next</button>
+        </div>
+
+        <!-- Step 3: Package Details -->
+        <div class="step hidden" id="step3">
+            <h3 class="text-lg font-semibold mb-4">Package Details</h3>
+            <textarea name="package_description" placeholder="Package Description" class="w-full mb-3 p-2 border rounded"></textarea>
+            <input type="text" name="weight" placeholder="Weight (kg)" class="w-full mb-3 p-2 border rounded">
+            <input type="text" name="dimensions" placeholder="Dimensions (LxWxH cm)" class="w-full mb-3 p-2 border rounded">
+            <button type="button" onclick="prevStep(2)" class="bg-gray-500 text-white px-4 py-2 rounded">Back</button>
+            <button type="button" onclick="nextStep(4)" class="bg-purple-600 text-white px-4 py-2 rounded">Next</button>
+        </div>
+
+        <!-- Step 4: Review & Submit -->
+        <div class="step hidden" id="step4">
+            <h3 class="text-lg font-semibold mb-4">Review & Submit</h3>
+            <p class="mb-4">Please review your details before confirming.</p>
+            <button type="button" onclick="prevStep(3)" class="bg-gray-500 text-white px-4 py-2 rounded">Back</button>
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Submit Booking</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    let currentStep = 1;
+
+    function showStep(step) {
+        document.querySelectorAll(".step").forEach(el => el.classList.add("hidden"));
+        document.getElementById("step" + step).classList.remove("hidden");
+        currentStep = step;
+    }
+
+    function nextStep(step) {
+        showStep(step);
+    }
+
+    function prevStep(step) {
+        showStep(step);
+    }
+</script>
+{% endblock %}
